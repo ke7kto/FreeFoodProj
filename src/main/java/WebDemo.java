@@ -29,7 +29,7 @@ public class WebDemo extends JFXPanel {
     private void initialiseJavaFXScene() {
         webView = new WebView();
         webEngine = webView.getEngine();
-        webEngine.load("https://rietoverflow.com");
+        webEngine.load("http://rietoverflow.com");
 
         Scene scene = new Scene(webView);
         setScene(scene);
