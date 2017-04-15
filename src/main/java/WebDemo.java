@@ -83,9 +83,12 @@ public class WebDemo extends JFXPanel {
                               service.signRequest(accessToken, request); // the access token from step 4
                               final Response response = request.send();
                               System.out.println(response.getBody());
+                              //SHEN can start working magic here
+                              OAuthRequest request2 = new OAuthRequest(Verb.GET, "https://api.twitter.com/1.1/account/verify_credentials.json", service);
                           } catch (IOException e) {
                               e.printStackTrace();
                           }
+
                       }
                 }
 
