@@ -1,3 +1,2 @@
 rootProject.name = 'FreeFoodProj'
-compile 'com.google.api-client:google-api-client'
 
