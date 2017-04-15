@@ -16,6 +16,9 @@ import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebView;
 import javafx.beans.value.ChangeListener;
 import javafx.stage.Stage;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -24,6 +27,7 @@ public class WebDemo extends JFXPanel {
     private WebView webView;
     private WebEngine webEngine;
     private String authUrl;
+    boolean initialized;
     final OAuth10aService service=new ServiceBuilder()
             .apiKey("U7rWvd4nzvoOCDRQiyzUUC9o9")
             .apiSecret("bwuFId5UkXxt8OZC3eRh5sLxzWh1LVVsWvLiJNrS1GkRQOP3yU")
@@ -31,6 +35,7 @@ public class WebDemo extends JFXPanel {
     final OAuthRequest request = new OAuthRequest(Verb.GET, "https://api.twitter.com/1.1/account/verify_credentials.json", service);
     OAuth1RequestToken requestToken;
     public WebDemo() {
+        initialized = false;
         Platform.runLater(() -> {
             initialiseJavaFXScene();
         });
@@ -46,18 +51,6 @@ public class WebDemo extends JFXPanel {
         frame.setVisible(true);
     }
 
-    private void nextThingToDo(String textInput){
-        try{
-            final OAuth1AccessToken accessToken = service.getAccessToken(requestToken, "837125662318161920-wgN6KHBNQ60LkMHaA2Kwl53L9pkhOHy");
-            service.signRequest(accessToken, request); // the access token from step 4
-            final Response response = request.send();
-            System.out.println(response.getBody());
-        }
-        catch(java.io.IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
     private void initialiseJavaFXScene() {
         webView = new WebView();
         try {
@@ -69,18 +62,34 @@ public class WebDemo extends JFXPanel {
         authUrl=service.getAuthorizationUrl(requestToken);
         webEngine.load(authUrl);
         webEngine.getOnStatusChanged();
-        Stage stage;
+        Scene scene = new Scene(webView);
+        setScene(scene);
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener<State>() {
               @Override public void changed(ObservableValue ov, State oldState, State newState) {
                   if (newState == Worker.State.SUCCEEDED) {
-                    stage.setTitle(webEngine.getLocation());
-                    System.out.println("called");
+                      if(initialized == false) {
+                          Document doc = webEngine.getDocument();
+                          //System.out.print(doc.getDocumentURI());
+                          initialized = true;
+                      }else{
+                          Document doc = webEngine.getDocument();
+                          NodeList nodes = doc.getElementsByTagName("code");
+                          Node testNode = nodes.item(0);
+                          String tokenCode = (testNode.getTextContent());
+                          final OAuth1AccessToken accessToken;
+                          try {
+                              accessToken = service.getAccessToken(requestToken, tokenCode);
+                              service.signRequest(accessToken, request); // the access token from step 4
+                              final Response response = request.send();
+                              System.out.println(response.getBody());
+                          } catch (IOException e) {
+                              e.printStackTrace();
+                          }
+                      }
                 }
 
                 }
             });
-        Scene scene = new Scene(webView);
-        setScene(scene);
     }
 }
