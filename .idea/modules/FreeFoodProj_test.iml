@@ -11,8 +11,10 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="FreeFoodProj_main" />
     <orderEntry type="library" name="Gradle: com.google.apis:google-api-services-oauth2:v1-rev130-1.22.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.scribejava:scribejava-apis:3.2.0" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: com.google.api-client:google-api-client:1.22.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.scribejava:scribejava-core:3.2.0" level="project" />
     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Gradle: com.google.oauth-client:google-oauth-client:1.22.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.http-client:google-http-client-jackson2:1.22.0" level="project" />
