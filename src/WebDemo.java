@@ -6,18 +6,18 @@ import javafx.scene.web.WebView;
 
 import javax.swing.*;
 
-public class event extends JFXPanel {
+public class WebDemo extends JFXPanel {
     private WebView webView;
     private WebEngine webEngine;
 
-    public event() {
+    public WebDemo() {
         Platform.runLater(() -> {
             initialiseJavaFXScene();
         });
     }
 
     public static void main(String[] args){
-        event e=new event();
+        WebDemo e=new WebDemo();
         JFrame frame=new JFrame();
         frame.add(e);
         frame.setSize(300,300);
@@ -29,7 +29,7 @@ public class event extends JFXPanel {
     private void initialiseJavaFXScene() {
         webView = new WebView();
         webEngine = webView.getEngine();
-        webEngine.load("http://www.google.com");
+        webEngine.load("http://maps.google.com");
 
         Scene scene = new Scene(webView);
         setScene(scene);
