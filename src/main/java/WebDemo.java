@@ -16,10 +16,11 @@ import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebView;
 import javafx.beans.value.ChangeListener;
 import javafx.stage.Stage;
+import org.json.JSONException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
+import org.json.JSONObject;
 import javax.swing.*;
 import java.io.IOException;
 
@@ -32,7 +33,7 @@ public class WebDemo extends JFXPanel {
             .apiKey("U7rWvd4nzvoOCDRQiyzUUC9o9")
             .apiSecret("bwuFId5UkXxt8OZC3eRh5sLxzWh1LVVsWvLiJNrS1GkRQOP3yU")
             .build(TwitterApi.instance());
-    final OAuthRequest request = new OAuthRequest(Verb.GET, "https://api.twitter.com/1.1/account/verify_credentials.json", service);
+    final OAuthRequest request = new OAuthRequest(Verb.GET, "https://api.twitter.com/1.1/search/tweets.json?q=cwru", service);
     OAuth1RequestToken requestToken;
     public WebDemo() {
         initialized = false;
@@ -82,10 +83,13 @@ public class WebDemo extends JFXPanel {
                               accessToken = service.getAccessToken(requestToken, tokenCode);
                               service.signRequest(accessToken, request); // the access token from step 4
                               final Response response = request.send();
-                              System.out.println(response.getBody());
+                              JSONObject responses = new JSONObject(response.getBody());
+
                               //SHEN can start working magic here
-                              OAuthRequest request2 = new OAuthRequest(Verb.GET, "https://api.twitter.com/1.1/account/verify_credentials.json", service);
                           } catch (IOException e) {
+                              e.printStackTrace();
+                          }
+                          catch(JSONException e){
                               e.printStackTrace();
                           }
 
