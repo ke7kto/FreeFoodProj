@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="restfb-2.0.0-rc.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/restfb-2.0.0-rc.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
